@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진로 게시판</title>
+    <title>진로</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <div class="logo-search">
-            <div class="logo" onclick="window.location.href='index.html'">김닥터넷<span class="subtitle">-슬기로운 수련을 위해-</span></div>
+            <div class="logo" onclick="window.location.href='index.html'">
+                김닥터넷
+                <span class="subtitle">-슬기로운 수련을 위해-</span>
+            </div>
             <div class="search-container">
                 <input type="text" class="search-bar" placeholder="검색">
-                <button class="search-button"><img src="images/image.png" alt="검색"></button>
+                <button class="search-button"><img src="images/search-icon.png" alt="검색"></button>
             </div>
         </div>
     </header>
@@ -36,7 +39,7 @@
     <main>
         <section class="main-content">
             <div class="board">
-                <h2>진로 게시판</h2>
+                <h2>진로</h2>
                 <div class="board-controls">
                     <button class="write-button" onclick="location.href='write_post.html'">글쓰기</button>
                 </div>
@@ -50,7 +53,7 @@
                             <th>공감</th>
                         </tr>
                     </thead>
-                    <tbody id="post-list-body">
+                    <tbody>
                         <tr>
                             <td colspan="5">게시글이 없습니다.</td>
                         </tr>
