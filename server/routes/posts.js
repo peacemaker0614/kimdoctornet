@@ -1,19 +1,26 @@
 const express = require('express');
-const router = express.Router();
 const Post = require('../models/Post');
+const router = express.Router();
 
-// 게시물 작성
 router.post('/create', async (req, res) => {
-    const { title, content, author } = req.body;
-    const post = new Post({ title, content, author });
-    await post.save();
-    res.redirect('/index.html');
+    const { title, content } = req.body;
+
+    try {
+        const newPost = new Post({ title, content });
+        await newPost.save();
+        res.status(201).json({ message: 'Post created successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
-// 게시물 조회
-router.get('/all', async (req, res) => {
-    const posts = await Post.find();
-    res.json(posts);
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.status(200).json(posts);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 module.exports = router;

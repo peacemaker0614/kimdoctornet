@@ -1,68 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.querySelector('#signup-form');
+    const signupForm = document.querySelector('#signupForm');
+    const loginForm = document.querySelector('#loginForm');
+    const postForm = document.querySelector('#postForm');
+
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(signupForm);
-            const response = await fetch('/auth/signup', {
+            const username = signupForm.username.value;
+            const password = signupForm.password.value;
+
+            const response = await fetch('https://your-heroku-app.herokuapp.com/api/auth/signup', {
                 method: 'POST',
-                body: new URLSearchParams(formData)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             });
-            if (response.ok) {
-                window.location.href = '/login.html';
-            }
+
+            const data = await response.json();
+            console.log(data);
         });
     }
 
-    const loginForm = document.querySelector('#login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(loginForm);
-            const response = await fetch('/auth/login', {
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
+
+            const response = await fetch('https://your-heroku-app.herokuapp.com/api/auth/login', {
                 method: 'POST',
-                body: new URLSearchParams(formData)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
             });
-            if (response.ok) {
-                window.location.href = '/index.html';
-            } else {
-                alert('로그인 실패');
-            }
+
+            const data = await response.json();
+            console.log(data);
         });
     }
 
-    const postForm = document.querySelector('#post-form');
     if (postForm) {
         postForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(postForm);
-            const response = await fetch('/posts/create', {
-                method: 'POST',
-                body: new URLSearchParams(formData)
-            });
-            if (response.ok) {
-                window.location.href = '/index.html';
-            }
-        });
-    }
+            const title = postForm.title.value;
+            const content = postForm.content.value;
 
-    const postListBody = document.querySelector('#post-list-body');
-    if (postListBody) {
-        fetch('/posts/all')
-            .then(response => response.json())
-            .then(posts => {
-                postListBody.innerHTML = '';
-                posts.forEach(post => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${post.category || '일반'}</td>
-                        <td>${post.title}</td>
-                        <td>${post.author}</td>
-                        <td>${new Date(post.createdAt).toLocaleDateString()}</td>
-                        <td>${post.likes || 0}</td>
-                    `;
-                    postListBody.appendChild(row);
-                });
+            const response = await fetch('https://your-heroku-app.herokuapp.com/api/posts/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content })
             });
+
+            const data = await response.json();
+            console.log(data);
+        });
     }
 });
